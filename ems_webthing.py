@@ -48,6 +48,18 @@ class BoilerThing(Thing):
                          'readOnly': False,
                      }))
 
+        self.heating_active = Value(self.boiler.heating_active)
+        self.add_property(
+            Property(self,
+                     'heating_active',
+                     self.heating_active,
+                     metadata={
+                         'title': 'heating_active',
+                         'type': 'boolean',
+                         'description': 'True, if heating is active',
+                         'readOnly': True,
+                     }))
+
 
     def on_value_changed(self):
         self.ioloop.add_callback(self.__on_value_changed)
@@ -55,6 +67,7 @@ class BoilerThing(Thing):
     def __on_value_changed(self):
         self.selected_flow_temperature.notify_of_external_update(self.boiler.selected_flow_temperature)
         self.current_flow_temperature.notify_of_external_update(self.boiler.current_flow_temperature)
+        self.heating_active.notify_of_external_update(self.boiler.heating_active)
 
 
 def run_server(port: int, ems_uri: str):

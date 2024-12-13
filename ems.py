@@ -11,6 +11,7 @@ class Boiler:
         self.uri = uri
         self.selected_flow_temperature = -1
         self.current_flow_temperature = -1
+        self.heating_active = False
         Thread(target=self.__run_loop, daemon=True).start()
 
     def set_listener(self, listener):
@@ -32,6 +33,7 @@ class Boiler:
         data = resp.json()
         self.selected_flow_temperature = data['selflowtemp']
         self.current_flow_temperature = data['curflowtemp']
+        self.heating_active = data['heatingactive']
         self.__notify_listener()
 
 
