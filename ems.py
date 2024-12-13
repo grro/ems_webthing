@@ -60,6 +60,7 @@ class Boiler:
                              headers={"Authorization": "Bearer " + self.token},
                              json={"cmd": "seltemp", "data": temp})
         resp.raise_for_status()
+        logging.info("dhw/seltemp updated to " + str(temp))
         self.__notify_listener()
 
     def set_dhw_activated(self, on: bool):
