@@ -12,6 +12,7 @@ class Boiler:
         if not self.uri.endswith("/"):
             self.uri = self.uri + '/'
         self.token = token
+        self.fetch_period_sec = 3
         self.selected_flow_temperature = -1
         self.current_flow_temperature = -1
         self.heating_active = False
@@ -20,6 +21,8 @@ class Boiler:
         self.dhw_storage_temp = -1
         self.dhw_active = False
         self.dhw_activated = False
+        self.__fetch_data()
+        logging.info("ems uri " + self.uri + " has been validated (fetch loop period: " + str(self.fetch_period_sec) + " sec)")
         Thread(target=self.__run_loop, daemon=True).start()
 
     def set_listener(self, listener):
@@ -34,7 +37,7 @@ class Boiler:
                 self.__fetch_data()
             except Exception as e:
                 logging.warning(str(e))
-            sleep(3)
+            sleep(self.fetch_period_sec)
 
     def __fetch_data(self):
         resp = requests.get(self.uri)
