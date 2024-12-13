@@ -12,6 +12,10 @@ class Boiler:
         self.selected_flow_temperature = -1
         self.current_flow_temperature = -1
         self.heating_active = False
+        self.dhw_selected_temp = -1        # domestic hot water
+        self.dhw_set_temp = -1
+        self.dhw_active = False
+        self.dhw_activated = False
         Thread(target=self.__run_loop, daemon=True).start()
 
     def set_listener(self, listener):
@@ -34,6 +38,10 @@ class Boiler:
         self.selected_flow_temperature = data['selflowtemp']
         self.current_flow_temperature = data['curflowtemp']
         self.heating_active = data['heatingactive']
+        self.dhw_selected_temp = data['dhw']['settemp']
+        self.dhw_set_temp = data['dhw']['seltemp']
+        self.dhw_active = data['dhw']['active']
+        self.dhw_activated = data['dhw']['activated']
         self.__notify_listener()
 
 
@@ -42,6 +50,13 @@ class Boiler:
         self.__notify_listener()
 
 
+    def set_dhw_selected_temp(self, temp: float):
+        # todo
+        self.__notify_listener()
+
+    def set_dhw_activated(self, on: bool):
+        # todo
+        self.__notify_listener()
 
 '''
 http://192.168.1.82/api/boiler
