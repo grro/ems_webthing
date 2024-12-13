@@ -81,7 +81,7 @@ class BoilerThing(Thing):
                      metadata={
                          'title': 'dhw_selected_temp',
                          'type': 'number',
-                         'description': 'The selected domestic hot water',
+                         'description': 'The selected domestic hot water temperature',
                          'readOnly': False,
                      }))
 
@@ -93,7 +93,20 @@ class BoilerThing(Thing):
                      metadata={
                          'title': 'dhw_set_temp',
                          'type': 'number',
-                         'description': 'The set domestic hot water',
+                         'description': 'The set domestic hot water temperature',
+                         'readOnly': True,
+                     }))
+
+
+        self.dhw_storage_temp = Value(self.boiler.dhw_storage_temp)
+        self.add_property(
+            Property(self,
+                     'dhw_storage_temp',
+                     self.dhw_storage_temp,
+                     metadata={
+                         'title': 'dhw_storage_temp',
+                         'type': 'number',
+                         'description': 'The domestic hot water storage temperature',
                          'readOnly': True,
                      }))
 
@@ -130,6 +143,7 @@ class BoilerThing(Thing):
         self.heating_active.notify_of_external_update(self.boiler.heating_active)
         self.dhw_set_temp.notify_of_external_update(self.boiler.dhw_set_temp)
         self.dhw_selected_temp.notify_of_external_update(self.boiler.dhw_selected_temp)
+        self.dhw_storage_temp.notify_of_external_update(self.boiler.dhw_storage_temp)
         self.dhw_activated.notify_of_external_update(self.boiler.dhw_activated)
         self.dhw_active.notify_of_external_update(self.boiler.dhw_active)
 

@@ -14,6 +14,7 @@ class Boiler:
         self.heating_active = False
         self.dhw_selected_temp = -1        # domestic hot water
         self.dhw_set_temp = -1
+        self.dhw_storage_temp = -1
         self.dhw_active = False
         self.dhw_activated = False
         Thread(target=self.__run_loop, daemon=True).start()
@@ -40,6 +41,7 @@ class Boiler:
         self.heating_active = data['heatingactive']
         self.dhw_selected_temp = data['dhw']['settemp']
         self.dhw_set_temp = data['dhw']['seltemp']
+        self.dhw_storage_temp = data['dhw']['storagetemp2']
         self.dhw_active = data['dhw']['active']
         self.dhw_activated = data['dhw']['activated']
         self.__notify_listener()
