@@ -19,6 +19,7 @@ class Boiler:
         self.dhw_selected_temp = -1        # domestic hot water
         self.dhw_set_temp = -1
         self.dhw_storage_temp = -1
+        self.dhw_flow_temp_offset = 40
         self.dhw_active = False
         self.dhw_activated = False
         Thread(target=self.__run_loop, daemon=True).start()
@@ -49,6 +50,7 @@ class Boiler:
         self.dhw_storage_temp = data['dhw']['storagetemp2']
         self.dhw_active = data['dhw']['active']
         self.dhw_activated = data['dhw']['activated']
+        self.dhw_flow_temp_offset = data['dhw']['flowtempoffset']
         self.__notify_listener()
 
 
@@ -63,6 +65,15 @@ class Boiler:
                              json={"cmd": "seltemp", "data": temp})
         resp.raise_for_status()
         logging.info("dhw/seltemp updated to " + str(temp))
+        self.__notify_listener()
+
+    def set_dhw_flow_temp_offset(self, temp: int):
+        update_uri = self.uri + "dhw/flowtempoffset"
+        resp = requests.post(update_uri,
+                             headers={"Authorization": "Bearer " + self.token},
+                             json={"cmd": "flowtempoffset", "data": temp})
+        resp.raise_for_status()
+        logging.info("dhw/flowtempoffset updated to " + str(temp))
         self.__notify_listener()
 
     def set_dhw_activated(self, on: bool):

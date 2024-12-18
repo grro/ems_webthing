@@ -134,6 +134,19 @@ class BoilerThing(Thing):
                          'readOnly': False,
                      }))
 
+        self.dhw_flow_temp_offset = Value(self.boiler.dhw_flow_temp_offset, self.boiler.set_dhw_flow_temp_offset)
+        self.add_property(
+            Property(self,
+                     'dhw_flow_temp_offset',
+                     self.dhw_flow_temp_offset,
+                     metadata={
+                         'title': 'dhw_flow_temp_offset',
+                         'type': 'number',
+                         'description': 'The selected domestic hot water flow temperature offset',
+                         'readOnly': False,
+                     }))
+
+
     def on_value_changed(self):
         self.ioloop.add_callback(self.__on_value_changed)
 
@@ -146,6 +159,7 @@ class BoilerThing(Thing):
         self.dhw_storage_temp.notify_of_external_update(self.boiler.dhw_storage_temp)
         self.dhw_activated.notify_of_external_update(self.boiler.dhw_activated)
         self.dhw_active.notify_of_external_update(self.boiler.dhw_active)
+        self.dhw_flow_temp_offset.notify_of_external_update(self.boiler.dhw_flow_temp_offset)
 
 
 def run_server(port: int, ems_uri: str, token: str):
