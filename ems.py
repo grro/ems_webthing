@@ -16,6 +16,7 @@ class Boiler:
         self.selected_flow_temperature = -1
         self.current_flow_temperature = -1
         self.heating_active = False
+        self.heating_activated = False
         self.dhw_selected_temp = -1        # domestic hot water
         self.dhw_set_temp = -1
         self.dhw_storage_temp = -1
@@ -45,6 +46,7 @@ class Boiler:
         self.selected_flow_temperature = data['selflowtemp']
         self.current_flow_temperature = data['curflowtemp']
         self.heating_active = data['heatingactive']
+        self.heating_activated = data['heatingactivated']
         self.dhw_selected_temp = data['dhw']['settemp']
         self.dhw_set_temp = data['dhw']['seltemp']
         self.dhw_storage_temp = data['dhw']['storagetemp2']

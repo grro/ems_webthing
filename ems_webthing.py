@@ -60,6 +60,18 @@ class BoilerThing(Thing):
                          'readOnly': True,
                      }))
 
+        self.heating_activated = Value(self.boiler.heating_activated)
+        self.add_property(
+            Property(self,
+                     'heating_activated',
+                     self.heating_activated,
+                     metadata={
+                         'title': 'heating_activated',
+                         'type': 'boolean',
+                         'description': 'True, if the heating is actived',
+                         'readOnly': True,
+                     }))
+
 
         self.selected_flow_temperature = Value(self.boiler.selected_flow_temperature, self.boiler.set_selected_flow_temperature)
         self.add_property(
@@ -154,6 +166,7 @@ class BoilerThing(Thing):
         self.selected_flow_temperature.notify_of_external_update(self.boiler.selected_flow_temperature)
         self.current_flow_temperature.notify_of_external_update(self.boiler.current_flow_temperature)
         self.heating_active.notify_of_external_update(self.boiler.heating_active)
+        self.heating_activated.notify_of_external_update(self.boiler.heating_activated)
         self.dhw_set_temp.notify_of_external_update(self.boiler.dhw_set_temp)
         self.dhw_selected_temp.notify_of_external_update(self.boiler.dhw_selected_temp)
         self.dhw_storage_temp.notify_of_external_update(self.boiler.dhw_storage_temp)
