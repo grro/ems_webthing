@@ -65,7 +65,7 @@ class Boiler:
                              json={"cmd": "seltemp", "data": temp})
         resp.raise_for_status()
         logging.info("dhw/seltemp updated to " + str(temp))
-        self.__notify_listener()
+        self.__fetch_data()
 
     def set_dhw_flow_temp_offset(self, temp: int):
         update_uri = self.uri + "dhw/flowtempoffset"
@@ -74,7 +74,7 @@ class Boiler:
                              json={"cmd": "flowtempoffset", "data": temp})
         resp.raise_for_status()
         logging.info("dhw/flowtempoffset updated to " + str(temp))
-        self.__notify_listener()
+        self.__fetch_data()
 
     def set_dhw_activated(self, on: bool):
         # todo
